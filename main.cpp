@@ -1,20 +1,27 @@
+#include <sstream>
 #include <iostream>
 #include <cmath>
+
 #include <math.h>
 #include <tgmath.h>
 #include <string.h>
 
 int bin2dec(long long);
-int dec2bin(double); //TODO
+long long dec2bin(int);
 int hex2dec(char hex[]);
 char* dec2hex(int); //TODO
 long long bin2hex(char hex[]); //TODO 
 char* hex2bin(long long); //TODO
-int concat(int a, int b);
 
 int main()
 {
-  int bin[10]; 
+  long long testBinary1 = 1001; // d7
+  int testDec1 = 34;
+  char testHex1[]= "0FA16"; //64022
+  int binResult = hex2dec(testHex1);
+  std::cout << "The decimal value of: " << testBinary1 << " is: " << bin2dec(testBinary1) << std::endl;
+  std::cout << "The binary value of: " << testDec1 << " is: " << dec2bin(testDec1) << std::endl;
+  std::cout << "The decimal value of: " << testHex1 << " is: " << binResult << std::endl;
   std::cin.get();
 }
 
@@ -51,21 +58,20 @@ int bin2dec(long long bin)
  * repeat the second step until the number 
  * is greater than zero
  */
-int dec2bin(int dec)
+long long dec2bin(int dec)
 {
-  //double numOfBits = log2(dec);
-  int bin[10], i, binOut;
-  for(i=0; dec>0;i++)
-  {
-    bin[i] = dec % 2;
-    dec /= 2;
-  }
-  for(i=i-1 ;i>=0 ;i--)
-  {
-    binOut = concat(binOut, bin[i]);
-  }
-  return binOut;
+    std::string bin;
+    while(dec!=0) 
+    {
+      bin=(dec%2==0 ?"0":"1")+bin; 
+      dec/=2;
+    }
+    std::string::size_type size = 0;
+    long long binLong = std::stoll (bin, &size, 10);
+    return binLong;
 }
+
+
 
 /** hex2dec
  * traslates hexadecimal number into 
@@ -85,7 +91,7 @@ int hex2dec(char hex[])
   int len = strlen(hex);
   int base = 1;
   int dec = 0;
-  for(int i=len-1; 1>=0; i--)
+  for(int i=len-1; i>=0; i--)
   {
     if(hex[i]>='0' && hex[i]<='9')
     {
@@ -101,18 +107,4 @@ int hex2dec(char hex[])
   return dec;
 }
 
-int concat(int a, int b)
-{
-  // Convert both the integers to string
-  std::string s1 = std::to_string(a);
-  std::string s2 = std::to_string(b);
 
-  // Concatenate both strings
-  std::string s = s1 + s2;
-
-  // Convert the concatenated string
-  // to integer
-  int c = stoi(s);
-
-  return c;
-}
