@@ -1,28 +1,30 @@
-#include <sstream>
+#include <string> 
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include <math.h>
 #include <tgmath.h>
 #include <string.h>
+#define DEBUG(x) std::cout << x << std::endl
 
 int bin2dec(long long);
 long long dec2bin(int);
 int hex2dec(char hex[]);
-char* dec2hex(int); //TODO
+std::string dec2hex(int dec);
 long long bin2hex(char hex[]); //TODO 
 char* hex2bin(long long); //TODO
 
 int main()
 {
-  long long testBinary1 = 1001; // d7
-  int testDec1 = 34;
-  char testHex1[]= "0FA16"; //64022
-  int binResult = hex2dec(testHex1);
+  long long testBinary1 = 1001;
+  int testDec1 = 38674;
+  char testHex1[]= "0FA16";
+  std::string resultDec2Hex = dec2hex(testDec1);
   std::cout << "The decimal value of: " << testBinary1 << " is: " << bin2dec(testBinary1) << std::endl;
   std::cout << "The binary value of: " << testDec1 << " is: " << dec2bin(testDec1) << std::endl;
-  std::cout << "The decimal value of: " << testHex1 << " is: " << binResult << std::endl;
-  std::cin.get();
+  std::cout << "The decimal value of: " << testHex1 << " is: " << hex2dec(testHex1) << std::endl;
+  std::cout << "The hexadecimal value of: " << testDec1 << " is: " << resultDec2Hex << std::endl;
 }
 
 /** bin2dec
@@ -105,6 +107,27 @@ int hex2dec(char hex[])
     }
   }
   return dec;
+}
+
+
+std::string dec2hex(int dec)
+{
+  int rem, product = 1;
+  std::string hex = "";
+  while (dec != 0) {
+    rem = dec % 16;
+    char ch;
+    if (rem >= 10)
+      ch = rem + 55;
+    else
+      ch = rem + 48;
+    hex += ch;
+
+    dec = dec / 16;
+    product *= 10;
+  }
+  std::reverse(hex.begin(), hex.end());
+  return hex;
 }
 
 
