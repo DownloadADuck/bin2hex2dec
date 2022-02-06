@@ -12,12 +12,13 @@ int bin2dec(long long);
 long long dec2bin(int);
 int hex2dec(char hex[]);
 std::string dec2hex(int dec);
-long long bin2hex(char hex[]); //TODO 
+std::string bin2hex(long long bin);
 char* hex2bin(long long); //TODO
 
 int main()
 {
   long long testBinary1 = 1001;
+  long long testBinary2 = 101011101010101101;
   int testDec1 = 38674;
   char testHex1[]= "0FA16";
   std::string resultDec2Hex = dec2hex(testDec1);
@@ -25,6 +26,7 @@ int main()
   std::cout << "The binary value of: " << testDec1 << " is: " << dec2bin(testDec1) << std::endl;
   std::cout << "The decimal value of: " << testHex1 << " is: " << hex2dec(testHex1) << std::endl;
   std::cout << "The hexadecimal value of: " << testDec1 << " is: " << resultDec2Hex << std::endl;
+  std::cout << "The hexadecimal value of: " << testBinary2 << " is: " << bin2hex(testBinary2) << std::endl;
 }
 
 /** bin2dec
@@ -127,6 +129,14 @@ std::string dec2hex(int dec)
     product *= 10;
   }
   std::reverse(hex.begin(), hex.end());
+  return hex;
+}
+
+
+std::string bin2hex(long long bin)
+{
+  int intermediate = bin2dec(bin);
+  std::string hex = dec2hex(intermediate);
   return hex;
 }
 
